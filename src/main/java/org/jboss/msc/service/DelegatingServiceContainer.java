@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.jboss.msc.service.management.ServiceStatus;
 import org.jboss.msc.value.Value;
 
 /**
@@ -171,6 +172,11 @@ public final class DelegatingServiceContainer implements ServiceContainer {
 
     /** {@inheritDoc} */
     public String getName() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Collection<ServiceStatus> queryServiceStatuses() {
         throw new UnsupportedOperationException();
     }
 

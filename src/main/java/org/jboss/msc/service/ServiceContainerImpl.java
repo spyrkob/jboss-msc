@@ -187,18 +187,7 @@ final class ServiceContainerImpl extends ServiceTargetImpl implements ServiceCon
         }
 
         public List<ServiceStatus> queryServiceStatuses() {
-            final Collection<ServiceRegistrationImpl> registrations = registry.values();
-            final ArrayList<ServiceStatus> list = new ArrayList<ServiceStatus>(registrations.size());
-            for (ServiceRegistrationImpl registration : registrations) {
-                final ServiceControllerImpl<?> instance = registration.getInstance();
-                if (instance != null) list.add(instance.getStatus());
-            }
-            Collections.sort(list, new Comparator<ServiceStatus>() {
-                public int compare(final ServiceStatus o1, final ServiceStatus o2) {
-                    return o1.getServiceName().compareTo(o2.getServiceName());
-                }
-            });
-            return list;
+            return ServiceContainerImpl.this.queryServiceStatuses();
         }
 
         public void setServiceMode(final String name, final String mode) {
@@ -686,6 +675,22 @@ final class ServiceContainerImpl extends ServiceTargetImpl implements ServiceCon
             }
         }
         return result;
+    }
+
+    @Override
+    public List<ServiceStatus> queryServiceStatuses() {
+        final Collection<ServiceRegistrationImpl> registrations = registry.values();
+        final ArrayList<ServiceStatus> list = new ArrayList<ServiceStatus>(registrations.size());
+        for (ServiceRegistrationImpl registration : registrations) {
+            final ServiceControllerImpl<?> instance = registration.getInstance();
+            if (instance != null) list.add(instance.getStatus());
+        }
+        Collections.sort(list, new Comparator<ServiceStatus>() {
+            public int compare(final ServiceStatus o1, final ServiceStatus o2) {
+                return o1.getServiceName().compareTo(o2.getServiceName());
+            }
+        });
+        return list;
     }
 
     void apply(ServiceBuilderImpl<?> builder, ServiceControllerImpl<?> parent) {

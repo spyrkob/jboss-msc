@@ -22,9 +22,12 @@
 
 package org.jboss.msc.service;
 
+import org.jboss.msc.service.management.ServiceStatus;
+
 import java.io.PrintStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -143,6 +146,8 @@ public interface ServiceContainer extends ServiceTarget, ServiceRegistry {
      * @return the container name
      */
     String getName();
+
+    Collection<ServiceStatus> queryServiceStatuses();
 
     /**
      * The factory class for service containers.
